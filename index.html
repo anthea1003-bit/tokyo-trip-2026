@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14261f">
+  <meta name="description" content="2026 年 7 月 24–28 日東京雙人旅行：每日順路行程、祭典與互動路線圖。">
+  <title>東京夏夜線｜7.24–7.28 雙人行</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@600;700;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3ynNZoZhwvYoKkt6nccX57o40gNFg=" crossorigin="">
+  <style>
+    :root {
+      --ink: #14261f;
+      --paper: #f6f0e2;
+      --paper-bright: #fffdf6;
+      --muted: #677269;
+      --line: rgba(20, 38, 31, .18);
+      --red: #d74632;
+      --sun: #f0ad35;
+      --aqua: #188f8b;
+      --blue: #3e6ca8;
+      --plum: #8b5069;
+      --shadow: 0 22px 60px rgba(20, 38, 31, .13);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(240, 173, 53, .17), transparent 25rem),
+        linear-gradient(115deg, transparent 0 48%, rgba(20, 38, 31, .035) 48% 49%, transparent 49% 100%),
+        var(--paper);
+      font-family: "IBM Plex Sans TC", "PingFang TC", sans-serif;
+      line-height: 1.65;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .2;
+      z-index: 99;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      transform: translateY(-160%);
+      background: var(--ink);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 999px;
+      z-index: 9999;
+      transition: transform .2s;
+    }
+    .skip-link:focus { transform: none; }
+
+    .hero {
+      position: relative;
+      min-height: 680px;
+      padding: 34px clamp(22px, 6vw, 88px) 70px;
+      overflow: hidden;
+      color: #fffdf6;
+      background:
+        linear-gradient(180deg, rgba(10, 26, 21, .08), rgba(10, 26, 21, .78)),
+        linear-gradient(120deg, #14261f 5%, #244d3e 55%, #173e42 100%);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.17);
+      border-radius: 50%;
+    }
+    .hero::before { width: 620px; height: 620px; right: -130px; top: -180px; box-shadow: 0 0 0 70px rgba(255,255,255,.025), 0 0 0 140px rgba(255,255,255,.018); }
+    .hero::after { width: 280px; height: 280px; left: -150px; bottom: -60px; }
+
+    .masthead {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding-bottom: 42px;
+      border-bottom: 1px solid rgba(255,255,255,.22);
+    }
+    .eyebrow { font-size: .76rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+    .stamp {
+      width: 82px;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #f0ad35;
+      border-radius: 50%;
+      color: #ffd47c;
+      font-family: "Noto Serif TC", serif;
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+      transform: rotate(8deg);
+      box-shadow: inset 0 0 0 5px rgba(240, 173, 53, .14);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      max-width: 1380px;
+      margin: 70px auto 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .62fr);
+      gap: clamp(42px, 8vw, 130px);
+      align-items: end;
+    }
+    .hero h1 {
+      margin: 0;
+      max-width: 810px;
+      font-family: "Noto Serif TC", serif;
+      font-size: clamp(4rem, 9vw, 8.8rem);
+      line-height: .96;
+      letter-spacing: -.055em;
+    }
+    .hero h1 span { display: block; color: #ffd47c; }
+    .hero-copy { max-width: 580px; margin-top: 34px; font-size: clamp(1rem, 1.6vw, 1.25rem); color: rgba(255,255,255,.77); }
+
+    .flight-card {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      padding: 28px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 26px 26px 6px 26px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 30px 80px rgba(0,0,0,.18);
+    }
+    .flight-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; }
+    .flight-row + .flight-row { margin-top: 22px; padding-top: 22px; border-top: 1px dashed rgba(255,255,255,.25); }
+    .airport { min-width: 0; }
+    .airport:last-child { text-align: right; }
+    .airport strong { display: block; font: 900 1.75rem/1 "Noto Serif TC", serif; }
+    .airport small { color: rgba(255,255,255,.66); }
+    .plane { color: #ffd47c; font-size: 1.25rem; }
+
+    main { position: relative; z-index: 2; }
+    .overview {
+      max-width: 1380px;
+      margin: -38px auto 0;
+      padding: 0 clamp(18px, 4vw, 34px);
+    }
+    .overview-card {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: var(--paper-bright);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .overview-item { min-height: 136px; padding: 25px; border-right: 1px solid var(--line); }
+    .overview-item:last-child { border-right: 0; }
+    .overview-item b { display: block; margin-bottom: 12px; font: 700 1.08rem/1.35 "Noto Serif TC", serif; }
+    .overview-item span { color: var(--muted); font-size: .85rem; }
+    .day-dot { width: 13px; height: 13px; border-radius: 50%; margin-bottom: 18px; background: var(--day-color); box-shadow: 0 0 0 6px color-mix(in srgb, var(--day-color) 18%, transparent); }
+
+    .section {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 110px clamp(22px, 4vw, 34px);
+    }
+    .section-heading { display: flex; justify-content: space-between; gap: 30px; align-items: end; margin-bottom: 44px; }
+    .kicker { color: var(--red); font-size: .75rem; font-weight: 600; letter-spacing: .19em; text-transform: uppercase; }
+    h2 { margin: 8px 0 0; font: 900 clamp(2.35rem, 5vw, 4.6rem)/1.05 "Noto Serif TC", serif; letter-spacing: -.04em; }
+    .section-note { max-width: 480px; color: var(--muted); }
+
+    .map-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.34fr) minmax(320px, .66fr);
+      min-height: 690px;
+      background: #e4e8dd;
+      border: 1px solid rgba(20,38,31,.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .map-wrap { position: relative; min-height: 690px; }
+    #map { position: absolute; inset: 0; background: #dce4da; }
+    .map-fallback {
+      position: absolute;
+      inset: 0;
+      z-index: 400;
+      display: grid;
+      place-items: center;
+      padding: 34px;
+      text-align: center;
+      background: radial-gradient(circle at 30% 30%, #edf0e7, #d4ddd3);
+      color: var(--muted);
+    }
+    .map-fallback b { display: block; color: var(--ink); font: 700 1.35rem "Noto Serif TC", serif; }
+    .map-ready .map-fallback { display: none; }
+    .map-legend {
+      position: absolute;
+      z-index: 500;
+      left: 18px;
+      bottom: 18px;
+      max-width: calc(100% - 36px);
+      padding: 12px 16px;
+      border: 1px solid rgba(20,38,31,.12);
+      border-radius: 14px;
+      background: rgba(255,253,246,.88);
+      backdrop-filter: blur(12px);
+      color: var(--muted);
+      font-size: .78rem;
+      box-shadow: 0 10px 30px rgba(20,38,31,.12);
+    }
+    .map-panel {
+      background: var(--paper-bright);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .day-tabs { display: flex; gap: 8px; padding: 24px; overflow-x: auto; border-bottom: 1px solid var(--line); scrollbar-width: thin; }
+    .day-tab {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 14px;
+      color: var(--ink);
+      background: transparent;
+      font: 600 .8rem "IBM Plex Sans TC", sans-serif;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .day-tab:hover { transform: translateY(-2px); background: #f2ead8; }
+    .day-tab.active { color: white; background: var(--ink); border-color: var(--ink); }
+    .route-summary { padding: 30px 28px 16px; }
+    .route-summary .route-day { color: var(--muted); font-size: .82rem; letter-spacing: .1em; }
+    .route-summary h3 { margin: 7px 0 12px; font: 700 1.8rem/1.2 "Noto Serif TC", serif; }
+    .route-summary p { margin: 0; color: var(--muted); }
+    .route-list { list-style: none; margin: 0; padding: 14px 28px 30px; overflow: auto; }
+    .route-stop { position: relative; padding: 0 0 24px 39px; }
+    .route-stop:not(:last-child)::after { content: ""; position: absolute; top: 23px; bottom: 0; left: 11px; border-left: 1px dashed rgba(20,38,31,.35); }
+    .route-number {
+      position: absolute;
+      top: 1px;
+      left: 0;
+      width: 23px;
+      height: 23px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: var(--route-color, var(--ink));
+      font-size: .68rem;
+      font-weight: 600;
+      box-shadow: 0 0 0 4px var(--paper-bright);
+    }
+    .route-stop button { padding: 0; border: 0; background: transparent; color: var(--ink); font: 600 .95rem "IBM Plex Sans TC", sans-serif; text-align: left; cursor: pointer; }
+    .route-stop small { display: block; margin-top: 2px; color: var(--muted); }
+    .map-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 22px 28px 28px; border-top: 1px solid var(--line); }
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .82rem;
+      transition: .2s ease;
+    }
+    .action-link.primary { color: white; background: var(--ink); }
+    .action-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(20,38,31,.12); }
+
+    .custom-marker { background: transparent; border: 0; }
+    .marker-pin {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: white;
+      border: 3px solid #fffdf6;
+      border-radius: 50% 50% 50% 10%;
+      transform: rotate(-45deg);
+      box-shadow: 0 8px 20px rgba(20,38,31,.27);
+      font-size: .72rem;
+      font-weight: 600;
+    }
+    .marker-pin span { transform: rotate(45deg); }
+    .leaflet-popup-content-wrapper { border-radius: 16px; box-shadow: 0 15px 45px rgba(20,38,31,.2); font-family: "IBM Plex Sans TC", sans-serif; }
+    .leaflet-popup-content { margin: 14px 16px; }
+    .leaflet-popup-content b { font-family: "Noto Serif TC", serif; }
+
+    .itinerary-grid { display: grid; gap: 26px; }
+    .day-card {
+      --card-color: var(--red);
+      position: relative;
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      background: var(--paper-bright);
+      border: 1px solid rgba(20,38,31,.12);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(20,38,31,.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .day-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .day-date { padding: 30px; color: white; background: var(--card-color); }
+    .day-date strong { display: block; font: 900 3rem/1 "Noto Serif TC", serif; }
+    .day-date span { display: block; margin-top: 8px; font-size: .82rem; letter-spacing: .13em; }
+    .day-date em { display: inline-block; margin-top: 22px; padding: 6px 10px; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; font-size: .72rem; font-style: normal; }
+    .day-content { padding: 30px clamp(24px, 4vw, 48px); }
+    .day-content h3 { margin: 0 0 4px; font: 700 1.55rem "Noto Serif TC", serif; }
+    .direction { margin: 0 0 22px; color: var(--muted); font-size: .85rem; }
+    .schedule { display: grid; grid-template-columns: 76px 1fr; column-gap: 18px; }
+    .schedule time, .schedule div { padding: 11px 0; border-top: 1px solid var(--line); }
+    .schedule time { font-weight: 600; color: var(--card-color); }
+    .schedule div b { font-weight: 600; }
+    .schedule div small { display: block; color: var(--muted); }
+    .day-footer { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .tag { padding: 6px 10px; border-radius: 999px; background: #efe8d7; color: var(--muted); font-size: .72rem; }
+    .tag.alert { color: #8f2e23; background: #fae3d8; }
+
+    .festival-section {
+      color: #fffdf6;
+      background: #152a23;
+      max-width: none;
+      padding-left: max(22px, calc((100vw - 1312px) / 2));
+      padding-right: max(22px, calc((100vw - 1312px) / 2));
+      overflow: hidden;
+    }
+    .festival-section .kicker { color: #ffd47c; }
+    .festival-section .section-note { color: rgba(255,255,255,.62); }
+    .festival-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .festival-card {
+      position: relative;
+      min-height: 410px;
+      padding: 36px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 26px;
+      overflow: hidden;
+      background: linear-gradient(155deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    }
+    .festival-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -50px;
+      top: -70px;
+      border: 1px solid rgba(255,212,124,.45);
+      border-radius: 50%;
+      box-shadow: 0 0 0 34px rgba(255,212,124,.05), 0 0 0 68px rgba(255,212,124,.03);
+    }
+    .festival-card h3 { margin: 20px 0 4px; font: 900 clamp(2rem, 4vw, 3.5rem)/1.08 "Noto Serif TC", serif; }
+    .festival-time { color: #ffd47c; font-size: 1.05rem; font-weight: 600; }
+    .festival-card ul { margin: 26px 0 0; padding-left: 1.15em; color: rgba(255,255,255,.7); }
+    .festival-card li + li { margin-top: 8px; }
+    .festival-card a { position: relative; z-index: 1; display: inline-block; margin-top: 22px; color: #ffd47c; text-underline-offset: 4px; }
+
+    .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .checklist-card { padding: 34px; border: 1px solid var(--line); border-radius: 24px; background: rgba(255,253,246,.72); }
+    .checklist-card h3 { margin: 0 0 20px; font: 700 1.45rem "Noto Serif TC", serif; }
+    .checklist-card ul { list-style: none; padding: 0; margin: 0; }
+    .checklist-card li { display: flex; gap: 13px; padding: 11px 0; border-top: 1px solid var(--line); }
+    .checklist-card li::before { content: "○"; color: var(--red); font-weight: 600; }
+
+    footer { padding: 54px 24px; color: rgba(255,255,255,.65); background: #0e1c18; text-align: center; font-size: .8rem; }
+    footer strong { display: block; margin-bottom: 7px; color: white; font: 700 1.1rem "Noto Serif TC", serif; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .hero { min-height: auto; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .flight-card { max-width: 560px; }
+      .overview-card { grid-template-columns: 1fr 1fr; }
+      .overview-item { border-bottom: 1px solid var(--line); }
+      .overview-item:nth-child(2n) { border-right: 0; }
+      .overview-item:last-child { grid-column: 1 / -1; }
+      .map-shell { grid-template-columns: 1fr; }
+      .map-wrap, #map { min-height: 520px; }
+      .map-panel { min-height: 620px; }
+      .section-heading { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 680px) {
+      .hero { padding: 24px 20px 64px; }
+      .masthead { padding-bottom: 28px; }
+      .stamp { width: 64px; height: 64px; font-size: .82rem; }
+      .hero-grid { margin-top: 48px; gap: 44px; }
+      .hero h1 { font-size: clamp(3.6rem, 20vw, 5.5rem); }
+      .flight-card { padding: 22px 18px; }
+      .flight-row { gap: 8px; }
+      .airport strong { font-size: 1.15rem; letter-spacing: -.025em; white-space: nowrap; }
+      .airport small { display: block; font-size: .68rem; white-space: nowrap; }
+      .overview { margin-top: -28px; }
+      .overview-card { grid-template-columns: 1fr; }
+      .overview-item, .overview-item:nth-child(2n) { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+      .overview-item:last-child { grid-column: auto; }
+      .overview-item { display: grid; grid-template-columns: auto 1fr; column-gap: 18px; align-items: center; }
+      .overview-item .day-dot { grid-row: 1 / 3; margin: 0; }
+      .overview-item b { margin: 0; }
+      .section { padding-top: 78px; padding-bottom: 78px; }
+      .map-shell { min-height: 0; border-radius: 20px; }
+      .map-wrap, #map { min-height: 430px; }
+      .map-panel { min-height: 600px; }
+      .day-card { grid-template-columns: 1fr; }
+      .day-date { display: flex; align-items: center; gap: 14px; padding: 22px 24px; }
+      .day-date strong { font-size: 2.35rem; }
+      .day-date span, .day-date em { margin: 0; }
+      .day-date em { margin-left: auto; }
+      .day-content { padding: 26px 22px 30px; }
+      .schedule { grid-template-columns: 64px 1fr; gap: 12px; font-size: .9rem; }
+      .festival-grid, .checklist { grid-template-columns: 1fr; }
+      .festival-card { min-height: auto; padding: 28px 24px; }
+      .map-actions { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media print {
+      body { background: white; }
+      body::before, .day-tabs, .map-actions, .map-legend { display: none; }
+      .hero { min-height: auto; padding: 30px; color: black; background: white; }
+      .hero h1 span { color: black; }
+      .flight-card { color: black; border-color: #aaa; }
+      .map-shell { display: block; box-shadow: none; }
+      .map-wrap { height: 420px; }
+      .day-card, .festival-card { break-inside: avoid; box-shadow: none; }
+      .section { padding-top: 40px; padding-bottom: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#route-map">跳到路線圖</a>
+
+  <header class="hero">
+    <div class="masthead">
+      <div>
+        <div class="eyebrow">Tokyo · Two-Person Summer Route</div>
+        <div style="margin-top:6px;color:rgba(255,255,255,.6);font-size:.82rem">2026.07.24 — 07.28</div>
+      </div>
+      <div class="stamp" aria-label="五天四夜">五日<br>東京</div>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <h1>東京<span>夏夜線</span></h1>
+        <p class="hero-copy">兩場夏祭、兩座博物館級體驗、築地清晨與東京東西兩端。行程按地圖分區，讓每一天都像沿著一條線前進。</p>
+      </div>
+      <div class="flight-card" aria-label="航班資訊">
+        <div class="flight-row">
+          <div class="airport"><strong>TPE 06:45</strong><small>7/24 · 桃園 T1</small></div>
+          <div class="plane" aria-hidden="true">✈</div>
+          <div class="airport"><strong>NRT 11:15</strong><small>7/24 · 成田 T1</small></div>
+        </div>
+        <div class="flight-row">
+          <div class="airport"><strong>NRT 21:15</strong><small>7/28 · 成田 T1</small></div>
+          <div class="plane" aria-hidden="true">✈</div>
+          <div class="airport"><strong>TPE 23:55</strong><small>7/28 · 桃園 T1</small></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="overview" aria-label="五日路線摘要">
+      <div class="overview-card">
+        <div class="overview-item" style="--day-color:#d74632"><div class="day-dot"></div><b>7/24 神樂坂</b><span>抵達・阿波舞</span></div>
+        <div class="overview-item" style="--day-color:#3e6ca8"><div class="day-dot"></div><b>7/25 築地・隅田川</b><span>市場・銀座・花火</span></div>
+        <div class="overview-item" style="--day-color:#188f8b"><div class="day-dot"></div><b>7/26 東京東→西</b><span>淺草・両國・六本木</span></div>
+        <div class="overview-item" style="--day-color:#8b5069"><div class="day-dot"></div><b>7/27 練馬・新宿</b><span>影城・牛舌</span></div>
+        <div class="overview-item" style="--day-color:#d07b2c"><div class="day-dot"></div><b>7/28 東京站・成田</b><span>沾麵・日本橋・回程</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="route-map">
+      <div class="section-heading reveal">
+        <div><div class="kicker">Interactive Route Map</div><h2>每日路線圖</h2></div>
+        <p class="section-note">點選日期，只顯示當天站點與順序。地圖線條代表行程順序，實際電車路線請使用下方 Google Maps 導航。</p>
+      </div>
+
+      <div class="map-shell reveal">
+        <div class="map-wrap" id="mapContainer">
+          <div class="map-fallback"><div><b>正在載入東京地圖</b>若地圖未出現，請確認網路連線；右側行程與導航連結仍可使用。</div></div>
+          <div id="map" role="region" aria-label="東京每日行程互動地圖"></div>
+          <div class="map-legend">● 實線依序串連景點，非實際鐵道路軌｜點擊標記可查看時間</div>
+        </div>
+        <aside class="map-panel" aria-live="polite">
+          <div class="day-tabs" role="tablist" aria-label="選擇日期" id="dayTabs"></div>
+          <div class="route-summary" id="routeSummary"></div>
+          <ol class="route-list" id="routeList"></ol>
+          <div class="map-actions">
+            <a class="action-link primary" id="googleRoute" href="#" target="_blank" rel="noopener">Google Maps 路線</a>
+            <a class="action-link" href="#daily-plan">查看時刻表 ↓</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="daily-plan">
+      <div class="section-heading reveal">
+        <div><div class="kicker">Day by Day</div><h2>五日行程</h2></div>
+        <p class="section-note">餐廳密度很高的日子，優先保留已訂位項目；沒有訂位的拉麵店視現場排隊與胃容量彈性調整。</p>
+      </div>
+
+      <div class="itinerary-grid">
+        <article class="day-card reveal" style="--card-color:#d74632">
+          <div class="day-date"><strong>24</strong><span>FRI · JUL</span><em>抵達日</em></div>
+          <div class="day-content">
+            <h3>成田 → 竹芝 → 神樂坂祭</h3>
+            <p class="direction">NRT T1　→　東京灣洲際酒店　→　飯田橋／神樂坂　→　飯店</p>
+            <div class="schedule">
+              <time>11:15</time><div><b>抵達成田 T1</b><small>入境、取行李約 60–75 分鐘。</small></div>
+              <time>14:15</time><div><b>飯店寄放行李／入住</b><small>保留休息時間，不再排跨區景點。</small></div>
+              <time>17:30</time><div><b>抵達飯田橋 B3 出口</b><small>先逛毘沙門天善國寺與神樂坂坡道。</small></div>
+              <time>19:00</time><div><b>第 52 回神樂坂祭・阿波舞</b><small>沿神樂坂通觀看，約 20:30 往飯田橋方向移動。</small></div>
+              <time>21:15</time><div><b>飯田橋 → 大門</b><small>大江戶線直達，步行返回飯店。</small></div>
+            </div>
+            <div class="day-footer"><span class="tag alert">祭典 19:00–21:00</span><span class="tag">飯田橋 B3 出口</span><span class="tag">輕裝前往</span></div>
+          </div>
+        </article>
+
+        <article class="day-card reveal" style="--card-color:#3e6ca8">
+          <div class="day-date"><strong>25</strong><span>SAT · JUL</span><em>花火日</em></div>
+          <div class="day-content">
+            <h3>築地 → 銀座 → 日比谷 → 隅田川</h3>
+            <p class="direction">竹芝　→　築地市場　→　銀座　→　日比谷　→　藏前第二會場</p>
+            <div class="schedule">
+              <time>07:00</time><div><b>築地場外市場</b><small>丸豐 → 鳥藤／海鮮丼 → 黑銀 → 狐狸屋 → 山長 → Soratsuki。</small></div>
+              <time>10:30</time><div><b>濱離宮或回飯店休息</b><small>7/25 有千圓市，09:00 後人潮增加。</small></div>
+              <time>12:30</time><div><b>銀座篝</b><small>若築地吃完整套，這站改為候補。</small></div>
+              <time>14:15</time><div><b>Pâtisserie TEN&</b><small>日比谷 OKUROJI，16:00 前結束午間營業。</small></div>
+              <time>16:30</time><div><b>抵達藏前第二會場周邊</b><small>無一般座席，依管制人流步行觀看。</small></div>
+              <time>19:00</time><div><b>隅田川花火大會</b><small>19:00–20:30；散場後等 30–45 分鐘再進藏前站。</small></div>
+            </div>
+            <div class="day-footer"><span class="tag alert">花火 19:00–20:30</span><span class="tag">不帶大行李</span><span class="tag">雨衣・水・行動電源</span></div>
+          </div>
+        </article>
+
+        <article class="day-card reveal" style="--card-color:#188f8b">
+          <div class="day-date"><strong>26</strong><span>SUN · JUL</span><em>換飯店</em></div>
+          <div class="day-content">
+            <h3>淺草 → 両國 → 人形町 → 六本木</h3>
+            <p class="direction">竹芝退房　→　淺草　→　両國　→　人形町　→　六本木　→　新宿</p>
+            <div class="schedule">
+              <time>07:30</time><div><b>退房，行李宅配至新宿飯店</b><small>請前一晚向兩間飯店確認當日配送／代收；若無法即日送達，前一晚寄出並留隨身袋。</small></div>
+              <time>10:00</time><div><b>淺草寺・仲見世</b><small>Asakusa Chaya Tabane no Shi 抹茶可麗餅。</small></div>
+              <time>12:00</time><div><b>江戶東京博物館</b><small>週一休館，所以固定排在週日。</small></div>
+              <time>14:15</time><div><b>人形町今半午餐</b><small>預約「人形町本店 2F すき焼・しゃぶしゃぶ」。</small></div>
+              <time>17:00</time><div><b>入鹿 TOKYO 六本木</b><small>週一公休；視今半後的胃容量決定。</small></div>
+              <time>19:00</time><div><b>返回新宿入住</b><small>結束由東京東側往西側的單向移動。</small></div>
+            </div>
+            <div class="day-footer"><span class="tag alert">先確認行李宅配</span><span class="tag alert">今半需預約</span><span class="tag">博物館週一休</span><span class="tag">入鹿完全無現金</span></div>
+          </div>
+        </article>
+
+        <article class="day-card reveal" style="--card-color:#8b5069">
+          <div class="day-date"><strong>27</strong><span>MON · JUL</span><em>魔法日</em></div>
+          <div class="day-content">
+            <h3>新宿 → 豐島園 → 新宿</h3>
+            <p class="direction">新宿　→　Warner Bros. Studio Tour Tokyo　→　西新宿</p>
+            <div class="schedule">
+              <time>08:45</time><div><b>新宿出發</b><small>大江戶線前往豐島園，預留入場與安檢。</small></div>
+              <time>10:00</time><div><b>哈利波特影城</b><small>預留至少 5 小時；入場前可先逛商店。</small></div>
+              <time>15:30</time><div><b>返回新宿</b><small>飯店休息或新宿購物。</small></div>
+              <time>18:30</time><div><b>牛舌 Lemon 總本店</b><small>西新宿，建議事前訂位。</small></div>
+            </div>
+            <div class="day-footer"><span class="tag alert">影城指定時段票</span><span class="tag alert">牛舌預約</span><span class="tag">新宿來回最省力</span></div>
+          </div>
+        </article>
+
+        <article class="day-card reveal" style="--card-color:#d07b2c">
+          <div class="day-date"><strong>28</strong><span>TUE · JUL</span><em>回程日</em></div>
+          <div class="day-content">
+            <h3>東京站 → 日本橋 → 成田</h3>
+            <p class="direction">新宿退房　→　東京站寄行李　→　六厘舍　→　COREDO 室町　→　東京站　→　NRT T1</p>
+            <div class="schedule">
+              <time>06:45</time><div><b>新宿退房</b><small>前往東京站寄放行李。</small></div>
+              <time>07:30</time><div><b>六厘舍朝沾麵</b><small>朝限定時段 07:30–09:45。</small></div>
+              <time>11:00</time><div><b>Tsujihan 室町店</b><small>COREDO 室町 1；避開日本橋本店長隊。</small></div>
+              <time>13:00</time><div><b>日本橋・東京站購物</b><small>最後採買，16:30 前回到車站。</small></div>
+              <time>17:00</time><div><b>搭 N’EX 前往成田</b><small>目標 18:15 左右抵達 T1。</small></div>
+              <time>21:15</time><div><b>TR875 起飛</b><small>23:55 抵達桃園 T1。</small></div>
+            </div>
+            <div class="day-footer"><span class="tag alert">16:30 取行李</span><span class="tag">NRT T1</span><span class="tag">預留 3 小時報到</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section festival-section">
+      <div class="section-heading reveal">
+        <div><div class="kicker">Two Summer Nights</div><h2>兩場東京夏夜</h2></div>
+        <p class="section-note">兩場活動都免費，但隅田川花火沒有一般坐席。不要把「抵達現場」等同於「找到固定觀賞位」。</p>
+      </div>
+      <div class="festival-grid">
+        <article class="festival-card reveal">
+          <div class="eyebrow">7.24 · Kagurazaka</div>
+          <h3>神樂坂祭<br>阿波舞</h3>
+          <div class="festival-time">19:00 — 21:00</div>
+          <ul><li>飯田橋 B3 出口進場</li><li>神樂坂一丁目至神樂坂上</li><li>沿坡道移動觀看，不必搶單一位置</li></ul>
+          <a href="https://www.kagurazaka.in/kagurazaka_festival/52th/" target="_blank" rel="noopener">官方活動公告 ↗</a>
+        </article>
+        <article class="festival-card reveal">
+          <div class="eyebrow">7.25 · Sumida River</div>
+          <h3>隅田川<br>花火大會</h3>
+          <div class="festival-time">19:00 — 20:30</div>
+          <ul><li>建議第二會場、藏前方向</li><li>16:30 抵達並接受現場人流管制</li><li>散場後延遲進站，避開第一波人潮</li></ul>
+          <a href="https://www.sumidagawa-hanabi.com/" target="_blank" rel="noopener">官方即時公告 ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading reveal">
+        <div><div class="kicker">Before Departure</div><h2>出發前清單</h2></div>
+        <p class="section-note">行程從明天開始；真正會影響成行的不是路線，而是指定時段票與熱門餐廳空位。</p>
+      </div>
+      <div class="checklist">
+        <div class="checklist-card reveal">
+          <h3>現在優先處理</h3>
+          <ul><li>確認「東京洲際酒店」完整英文名稱</li><li>訂妥 7/26–28 新宿站附近飯店並確認可代收宅配行李</li><li>購買 7/27 10:00 左右影城門票</li><li>預約 7/26 14:00 今半與 7/27 牛舌 Lemon</li></ul>
+        </div>
+        <div class="checklist-card reveal">
+          <h3>花火隨身物品</h3>
+          <ul><li>每人至少一瓶水與鹽分補給</li><li>輕便雨衣，不帶大型雨傘</li><li>行動電源與離線飯店地址截圖</li><li>舒適鞋、毛巾、少量現金及交通 IC 卡</li></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>東京夏夜線 · 2026</strong>
+    路線依景點地理位置與 2026 年公開營業／活動資訊整理。地圖線條為停靠順序示意，請以當日交通公告為準。
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const dayData = [
+      {
+        id: "d1", tab: "7/24", date: "7 月 24 日・週五", title: "成田 → 神樂坂 → 竹芝", color: "#d74632",
+        summary: "抵達後休息，傍晚沿大江戶線往返神樂坂祭。",
+        stops: [
+          {name:"成田機場 T1", time:"11:15", coords:[35.7647,140.3864], note:"TR866 抵達"},
+          {name:"東京灣洲際酒店", time:"14:15", coords:[35.6541,139.7627], note:"寄行李、入住與休息"},
+          {name:"神樂坂祭・飯田橋入口", time:"17:30", coords:[35.7014,139.7421], note:"阿波舞 19:00–21:00"},
+          {name:"東京灣洲際酒店", time:"21:15", coords:[35.6541,139.7627], note:"飯田橋搭大江戶線返回"}
+        ]
+      },
+      {
+        id: "d2", tab: "7/25", date: "7 月 25 日・週六", title: "築地 → 隅田川", color: "#3e6ca8",
+        summary: "早晨由築地一路往銀座、日比谷，下午提早進入花火第二會場。",
+        stops: [
+          {name:"東京灣洲際酒店", time:"06:20", coords:[35.6541,139.7627], note:"出發"},
+          {name:"築地場外市場", time:"07:00", coords:[35.6654,139.7707], note:"六站品嚐路線"},
+          {name:"銀座篝 本店", time:"12:30", coords:[35.6713,139.7612], note:"視胃容量保留"},
+          {name:"Pâtisserie TEN&", time:"14:15", coords:[35.6700,139.7576], note:"日比谷 OKUROJI"},
+          {name:"隅田川花火・第二會場", time:"16:30", coords:[35.7045,139.7975], note:"花火 19:00–20:30"},
+          {name:"東京灣洲際酒店", time:"21:45", coords:[35.6541,139.7627], note:"藏前搭大江戶線返回"}
+        ]
+      },
+      {
+        id: "d3", tab: "7/26", date: "7 月 26 日・週日", title: "東京東側 → 西側", color: "#188f8b",
+        summary: "行李先宅配至新宿，從竹芝直接往淺草，再一路往両國、人形町、六本木與新宿。",
+        stops: [
+          {name:"東京灣洲際酒店", time:"07:30", coords:[35.6541,139.7627], note:"退房"},
+          {name:"淺草寺・Tabane no Shi", time:"10:00", coords:[35.7148,139.7965], note:"寺院與抹茶可麗餅"},
+          {name:"江戶東京博物館", time:"12:00", coords:[35.6966,139.7958], note:"週一休館"},
+          {name:"人形町今半 本店", time:"14:15", coords:[35.6850,139.7833], note:"2F すき焼・しゃぶしゃぶ"},
+          {name:"入鹿 TOKYO 六本木", time:"17:00", coords:[35.6654,139.7318], note:"週一公休、完全無現金"},
+          {name:"新宿站飯店", time:"19:00", coords:[35.6896,139.7006], note:"入住"}
+        ]
+      },
+      {
+        id: "d4", tab: "7/27", date: "7 月 27 日・週一", title: "新宿 ↔ 豐島園", color: "#8b5069",
+        summary: "整天集中東京西側，影城結束後回西新宿吃牛舌。",
+        stops: [
+          {name:"新宿站飯店", time:"08:45", coords:[35.6896,139.7006], note:"大江戶線出發"},
+          {name:"Warner Bros. Studio Tour", time:"10:00", coords:[35.7429,139.6490], note:"預留至少 5 小時"},
+          {name:"牛舌 Lemon 總本店", time:"18:30", coords:[35.6958,139.6984], note:"建議預約"},
+          {name:"新宿站飯店", time:"20:00", coords:[35.6896,139.7006], note:"步行返回"}
+        ]
+      },
+      {
+        id: "d5", tab: "7/28", date: "7 月 28 日・週二", title: "東京站 → 成田", color: "#d07b2c",
+        summary: "行李留在東京站，步行完成拉麵與日本橋午餐，再直接前往機場。",
+        stops: [
+          {name:"新宿站飯店", time:"06:45", coords:[35.6896,139.7006], note:"退房"},
+          {name:"東京站・六厘舍", time:"07:30", coords:[35.6812,139.7683], note:"寄行李、朝沾麵"},
+          {name:"Tsujihan 室町店", time:"11:00", coords:[35.6861,139.7730], note:"COREDO 室町 1"},
+          {name:"東京站", time:"16:30", coords:[35.6812,139.7671], note:"取行李、搭 N’EX"},
+          {name:"成田機場 T1", time:"18:15", coords:[35.7647,140.3864], note:"TR875 21:15 起飛"}
+        ]
+      }
+    ];
+
+    const tabs = document.getElementById("dayTabs");
+    const summary = document.getElementById("routeSummary");
+    const list = document.getElementById("routeList");
+    const googleRoute = document.getElementById("googleRoute");
+    let map, markerLayer, lineLayer;
+
+    function mapsUrl(stops) {
+      const pts = stops.map(s => s.coords.join(","));
+      const origin = encodeURIComponent(pts[0]);
+      const destination = encodeURIComponent(pts[pts.length - 1]);
+      const waypoints = encodeURIComponent(pts.slice(1, -1).join("|"));
+      return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=transit`;
+    }
+
+    function markerIcon(number, color) {
+      return L.divIcon({
+        className: "custom-marker",
+        html: `<div class="marker-pin" style="background:${color}"><span>${number}</span></div>`,
+        iconSize: [34, 34], iconAnchor: [17, 32], popupAnchor: [0, -31]
+      });
+    }
+
+    function initMap() {
+      if (!window.L) return;
+      map = L.map("map", {zoomControl: false, scrollWheelZoom: false}).setView([35.6895, 139.76], 12);
+      L.control.zoom({position:"topright"}).addTo(map);
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+        subdomains: "abcd", maxZoom: 19
+      }).addTo(map);
+      markerLayer = L.layerGroup().addTo(map);
+      lineLayer = L.layerGroup().addTo(map);
+      document.getElementById("mapContainer").classList.add("map-ready");
+    }
+
+    function renderTabs(activeId, focusActive = false) {
+      tabs.innerHTML = "";
+      dayData.forEach((day, index) => {
+        const button = document.createElement("button");
+        button.className = `day-tab${day.id === activeId ? " active" : ""}`;
+        button.type = "button";
+        button.role = "tab";
+        button.setAttribute("aria-selected", day.id === activeId ? "true" : "false");
+        button.tabIndex = day.id === activeId ? 0 : -1;
+        button.setAttribute("aria-label", `${day.date}：${day.title}`);
+        button.textContent = day.tab;
+        button.addEventListener("click", () => showDay(day.id, true));
+        button.addEventListener("keydown", event => {
+          const last = dayData.length - 1;
+          let next = null;
+          if (event.key === "ArrowRight") next = index === last ? 0 : index + 1;
+          if (event.key === "ArrowLeft") next = index === 0 ? last : index - 1;
+          if (event.key === "Home") next = 0;
+          if (event.key === "End") next = last;
+          if (next === null) return;
+          event.preventDefault();
+          showDay(dayData[next].id, true);
+        });
+        tabs.appendChild(button);
+      });
+      if (focusActive) tabs.querySelector(".day-tab.active")?.focus();
+    }
+
+    function showDay(id, focusTab = false) {
+      const day = dayData.find(d => d.id === id) || dayData[0];
+      renderTabs(day.id, focusTab);
+      summary.innerHTML = `<div class="route-day">${day.date}</div><h3>${day.title}</h3><p>${day.summary}</p>`;
+      list.style.setProperty("--route-color", day.color);
+      list.innerHTML = day.stops.map((stop, index) => `
+        <li class="route-stop">
+          <span class="route-number" style="background:${day.color}">${index + 1}</span>
+          <button type="button" data-stop="${index}">${stop.time}　${stop.name}</button>
+          <small>${stop.note}</small>
+        </li>`).join("");
+      googleRoute.href = mapsUrl(day.stops);
+
+      if (map) {
+        markerLayer.clearLayers();
+        lineLayer.clearLayers();
+        const coords = day.stops.map(s => s.coords);
+        L.polyline(coords, {color: day.color, weight: 5, opacity: .78, dashArray: "3 10", lineCap: "round"}).addTo(lineLayer);
+        day.stops.forEach((stop, index) => {
+          L.marker(stop.coords, {icon: markerIcon(index + 1, day.color)})
+            .bindPopup(`<b>${stop.time}　${stop.name}</b><br>${stop.note}`)
+            .addTo(markerLayer);
+        });
+        const bounds = L.latLngBounds(coords);
+        map.fitBounds(bounds, {padding:[55,55], maxZoom:13});
+      }
+
+      list.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", () => {
+          if (!map) return;
+          const stop = day.stops[Number(button.dataset.stop)];
+          map.setView(stop.coords, Math.max(map.getZoom(), 15), {animate:true});
+          const layers = markerLayer.getLayers();
+          layers[Number(button.dataset.stop)]?.openPopup();
+        });
+      });
+    }
+
+    initMap();
+    showDay("d1");
+
+    const revealObserver = "IntersectionObserver" in window
+      ? new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add("visible"); revealObserver.unobserve(entry.target); }
+        }), {threshold:.12})
+      : null;
+    document.querySelectorAll(".reveal").forEach(el => revealObserver ? revealObserver.observe(el) : el.classList.add("visible"));
+  </script>
+</body>
+</html>
