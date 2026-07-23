@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@600;700;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3ynNZoZhwvYoKkt6nccX57o40gNFg=" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
     :root {
       --ink: #14261f;
@@ -198,8 +198,8 @@
       box-shadow: var(--shadow);
       overflow: hidden;
     }
-    .map-wrap { position: relative; min-height: 690px; }
-    #map { position: absolute; inset: 0; background: #dce4da; }
+    .map-wrap { position: relative; min-height: 690px; overflow: hidden; isolation: isolate; }
+    #map { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #dce4da; }
     .map-fallback {
       position: absolute;
       inset: 0;
@@ -229,6 +229,8 @@
       box-shadow: 0 10px 30px rgba(20,38,31,.12);
     }
     .map-panel {
+      position: relative;
+      z-index: 1;
       background: var(--paper-bright);
       display: flex;
       flex-direction: column;
