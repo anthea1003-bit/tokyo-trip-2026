@@ -468,6 +468,12 @@
     }
 
     @media (max-width: 680px) {
+      .skip-link {
+        position: absolute;
+        top: calc(116px + env(safe-area-inset-top, 0px));
+        left: max(18px, env(safe-area-inset-left, 0px));
+        transform: none;
+      }
       .hero { padding: 24px 20px 64px; }
       .masthead { padding-bottom: 28px; }
       .stamp { width: 64px; height: 64px; font-size: .82rem; }
