@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#14261f">
-  <meta name="description" content="2026 年 7 月 24–28 日東京雙人旅行：夏祭、築地、日光世界遺產、戰場之原健行、哈利波特影城與互動路線圖。">
+  <meta name="description" content="2026 年 7 月 24–28 日東京雙人旅行：夏祭、築地、江戶東京博物館、橫濱海港與中華街、哈利波特影城及互動路線圖。">
   <title>東京夏夜線｜7.24–7.28 雙人行</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -289,6 +289,7 @@
       transition: .2s ease;
     }
     .action-link.primary { color: white; background: var(--ink); }
+    .action-link[hidden] { display: none; }
     .action-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(20,38,31,.12); }
 
     .custom-marker { background: transparent; border: 0; }
@@ -543,7 +544,7 @@
     <div class="hero-grid">
       <div>
         <h1>東京<span>夏夜線</span></h1>
-        <p class="hero-copy">兩場夏祭、築地清晨、日光世界遺產與奧日光健行，最後以魔法影城和麻布十番收尾。行程按地圖分區，讓每一天都沿著一條線前進。</p>
+        <p class="hero-copy">兩場夏祭與築地清晨之後，沿東京東側走進江戶歷史，再到橫濱海港、中華街與關內美食，最後以魔法影城收尾。每天按地圖分區，少走回頭路。</p>
       </div>
       <div class="flight-card" aria-label="航班資訊">
         <div class="flight-row">
@@ -565,9 +566,9 @@
       <div class="overview-card">
         <div class="overview-item" style="--day-color:#d74632"><div class="day-dot"></div><b>7/24 神樂坂</b><span>抵達・阿波舞</span></div>
         <div class="overview-item" style="--day-color:#3e6ca8"><div class="day-dot"></div><b>7/25 築地・隅田川</b><span>市場・銀座・花火</span></div>
-        <div class="overview-item" style="--day-color:#188f8b"><div class="day-dot"></div><b>7/26 日光・世界遺產</b><span>東照宮・中禪寺湖</span></div>
-        <div class="overview-item" style="--day-color:#8b5069"><div class="day-dot"></div><b>7/27 奧日光・健行</b><span>湯瀑・戰場之原</span></div>
-        <div class="overview-item" style="--day-color:#d07b2c"><div class="day-dot"></div><b>7/28 影城・麻布十番</b><span>魔法世界・回程</span></div>
+        <div class="overview-item" style="--day-color:#188f8b"><div class="day-dot"></div><b>7/26 淺草・兩國</b><span>八十八・江戶博物館</span></div>
+        <div class="overview-item" style="--day-color:#8b5069"><div class="day-dot"></div><b>7/27 橫濱海港</b><span>紅磚・中華街・關內</span></div>
+        <div class="overview-item" style="--day-color:#d07b2c"><div class="day-dot"></div><b>7/28 哈利波特影城</b><span>11:30 入場・回程</span></div>
       </div>
     </section>
 
@@ -580,7 +581,7 @@
       <div class="map-shell reveal">
         <div class="map-wrap" id="mapContainer">
           <div class="map-fallback"><div><b>正在載入行程地圖</b>若地圖未出現，請確認網路連線；右側行程與導航連結仍可使用。</div></div>
-          <div id="map" role="region" aria-label="東京與日光每日行程互動地圖"></div>
+          <div id="map" role="region" aria-label="東京與橫濱每日行程互動地圖"></div>
           <div class="map-legend">● 實線依序串連景點，非實際鐵道路軌｜點擊標記可查看時間</div>
         </div>
         <aside class="map-panel" aria-live="polite">
@@ -588,7 +589,8 @@
           <div class="route-summary" id="routeSummary"></div>
           <ol class="route-list" id="routeList"></ol>
           <div class="map-actions">
-            <a class="action-link primary" id="googleRoute" href="#" target="_blank" rel="noopener">Google Maps 路線</a>
+            <a class="action-link primary" id="googleRoute" href="#">Google Maps 路線</a>
+            <a class="action-link" id="googleRouteExtra" href="#" hidden>第二段 Google Maps</a>
             <a class="action-link" href="#daily-plan">查看時刻表 ↓</a>
           </div>
         </aside>
@@ -598,7 +600,7 @@
     <section class="section" id="daily-plan">
       <div class="section-heading reveal">
         <div><div class="kicker">Day by Day</div><h2>五日行程</h2></div>
-        <p class="section-note">日光段以東武特急與巴士班次為骨架；7/28 影城必須選早場，才能保留麻布十番與充足的機場緩衝。</p>
+        <p class="section-note">7/26 先在淺草避開抹茶店午間尖峰，再由兩國一路向南移動；7/27 走橫濱海港單向線，7/28 依已購得的 11:30 影城時段保留機場緩衝。</p>
       </div>
 
       <div class="itinerary-grid">
@@ -666,27 +668,27 @@
         </article>
 
         <article class="day-card reveal" style="--card-color:#188f8b">
-          <div class="day-date"><strong>26</strong><span>SUN · JUL</span><em>世界遺產</em></div>
+          <div class="day-date"><strong>26</strong><span>SUN · JUL</span><em>東京東側</em></div>
           <div class="day-content">
-            <h3>東京 → 日光二社一寺 → 中禪寺湖</h3>
-            <p class="direction">竹芝退房　→　淺草　→　東武日光　→　神橋／二社一寺　→　中禪寺溫泉</p>
+            <h3>八十八良葉舎 → 江戶東京博物館 → 橫濱</h3>
+            <p class="direction">竹芝退房　→　淺草　→　兩國　→　橫濱港未來</p>
             <div class="schedule">
-              <time>06:30</time><div><b>退房，只帶兩天一夜背包</b><small>大行李寄放回住飯店，或宅配至 7/27 大門／濱松町飯店。</small></div>
-              <time>07:30</time><div><b>淺草搭東武特急</b><small>預約約 09:40 前抵達東武日光的早班；指定席與基本車資分開購買。</small></div>
-              <time>10:00</time><div><b>神橋 → 輪王寺三佛堂</b><small>抵達後由神橋開始，沿世界遺產區單向步行。</small></div>
-              <time>11:30</time><div><b>日光東照宮</b><small>陽明門、三猿、眠貓與奧宮；預留約 2 小時。</small></div>
-              <time>13:30</time><div><b>湯波料理午餐</b><small>餐後續逛二荒山神社；有體力再加大猷院。</small></div>
-              <time>15:30</time><div><b>西參道入口 → 中禪寺溫泉</b><small>搭東武巴士上山，避開隔天重複往返。</small></div>
-              <time>16:30</time><div><b>華嚴瀑布・中禪寺湖</b><small>若錯過瀑布末班入場，改排隔天清晨。</small></div>
-              <time>17:30</time><div><b>入住中禪寺溫泉</b><small>湖畔散步、早點休息，為隔天健行保留體力。</small></div>
+              <time>08:30</time><div><b>東京灣洲際退房</b><small>帶全部行李前往淺草；大型行李先放東武淺草站置物櫃。</small></div>
+              <time>09:20</time><div><b>東武淺草站寄放行李</b><small>記下置物櫃位置並把取件憑證收好，再步行前往八十八。</small></div>
+              <time>09:30</time><div><b>八十八良葉舎 淺草排隊</b><small>週日開店前抵達；10:00 開店後點抹茶飲或冰品，預留約 45–60 分鐘。</small></div>
+              <time>10:50</time><div><b>取行李，淺草 → 兩國</b><small>有行李建議搭計程車約 10–15 分鐘；大眾運輸可在藏前轉大江戶線。</small></div>
+              <time>11:15</time><div><b>江戶東京博物館寄放行李</b><small>大型行李可詢問 1 樓服務台；先處理行李再入館。</small></div>
+              <time>11:30</time><div><b>江戶東京博物館</b><small>常設展抓 2.5–3 小時；7/26 為特展末日，人多時優先看常設展。</small></div>
+              <time>14:30</time><div><b>兩國 → 橫濱港未來</b><small>JR 兩國至錦糸町，轉總武快速線至橫濱，再轉港未來線。</small></div>
+              <time>16:15</time><div><b>入住橫濱洲際大飯店</b><small>放好行李後只排港未來周邊散步與晚餐，不再跨區。</small></div>
             </div>
-            <div class="day-footer"><span class="tag alert">東武特急先訂位</span><span class="tag alert">確認行李寄放</span><span class="tag">住中禪寺最順</span><span class="tag">東照宮 16:30 最終入場</span></div>
+            <div class="day-footer"><span class="tag alert">八十八 09:30 到</span><span class="tag alert">博物館特展末日</span><span class="tag">兩國寄放行李</span><span class="tag">住橫濱洲際</span></div>
             <details class="food-dropdown">
-              <summary><strong>沿線備選餐廳</strong><small>淺草步行圈・1 間</small></summary>
+              <summary><strong>淺草沿線備選</strong><small>八十八周邊・1 間</small></summary>
               <div class="food-options">
                 <div class="food-option">
-                  <div class="food-option-head"><b>Asakusa Chaya Tabane no Shi</b><span class="food-route caution">本次無法安排</span></div>
-                  <p>地理位置接近淺草段，但與已鎖定的早班特急衝突；本次只作收藏點，不要為它延後日光出發。</p>
+                  <div class="food-option-head"><b>Asakusa Chaya Tabane no Shi</b><span class="food-route caution">同區二選一</span></div>
+                  <p>與八十八同在淺草步行圈；若八十八排隊超過 60 分鐘，可改吃這家，但不要兩家都排，以免壓縮博物館時間。</p>
                   <a href="https://www.google.com/maps/search/?api=1&amp;query=Asakusa+Chaya+Tabane+no+Shi" target="_blank" rel="noopener" aria-label="在 Google Maps 查看Asakusa Chaya Tabane no Shi">Google Maps ↗</a>
                 </div>
               </div>
@@ -695,52 +697,64 @@
         </article>
 
         <article class="day-card reveal" style="--card-color:#8b5069">
-          <div class="day-date"><strong>27</strong><span>MON · JUL</span><em>健行日</em></div>
+          <div class="day-date"><strong>27</strong><span>MON · JUL</span><em>橫濱海港</em></div>
           <div class="day-content">
-            <h3>湯瀑 → 戰場之原 → 龍頭瀑布</h3>
-            <p class="direction">中禪寺溫泉　→　湯瀑　→　泉門池／戰場之原　→　赤沼　→　龍頭瀑布　→　中禪寺取行李　→　東京</p>
+            <h3>紅磚倉庫 → 山下公園 → 中華街 → 麵や魁星</h3>
+            <p class="direction">橫濱洲際　→　紅磚倉庫　→　海濱步道　→　中華街　→　關內　→　飯店取行李　→　新宿</p>
             <div class="schedule">
-              <time>07:30</time><div><b>早餐、退房</b><small>過夜背包寄放中禪寺飯店，只帶水、雨具與小背包。</small></div>
-              <time>08:10</time><div><b>搭巴士前往湯滝入口</b><small>下車後步行約 5 分鐘抵達湯瀑觀景台。</small></div>
-              <time>08:40</time><div><b>湯瀑</b><small>由北往南走，整體微下坡，對初次健行最友善。</small></div>
-              <time>09:00</time><div><b>戰場之原自然研究路</b><small>湯瀑 → 小瀑布 → 泉門池 → 青木橋 → 赤沼；含休息與拍照抓 2.5–3 小時。</small></div>
-              <time>12:00</time><div><b>抵達赤沼</b><small>視體力搭一小段巴士到龍頭瀑布，在龍頭之茶屋午餐。</small></div>
-              <time>13:30</time><div><b>返回中禪寺湖取行李</b><small>若前一天沒看華嚴瀑布，這裡補排。</small></div>
-              <time>15:00</time><div><b>巴士下山至東武日光站</b><small>依預訂的特急班次反推，至少預留 20 分鐘轉車。</small></div>
-              <time>16:20</time><div><b>東武特急返回東京</b><small>約 18:30–19:30 入住大門／濱松町一帶。</small></div>
+              <time>09:30</time><div><b>退房、行李寄放飯店</b><small>今天全程步行較多，只帶水、雨具與小包。</small></div>
+              <time>10:00</time><div><b>臨港公園 → 汽車道</b><small>沿海往南走，約 20 分鐘到紅磚倉庫；炎熱時改搭港未來線或計程車。</small></div>
+              <time>10:30</time><div><b>橫濱紅磚倉庫</b><small>1 號館 10:00 開、2 號館 11:00 開；先拍外觀再入館。</small></div>
+              <time>11:45</time><div><b>象鼻公園 → 山下公園</b><small>沿海濱步道單向前進，約 25–30 分鐘。</small></div>
+              <time>12:20</time><div><b>橫濱中華街</b><small>由朝陽門進入，散步與少量點心即可，主餐留給關內拉麵。</small></div>
+              <time>13:30</time><div><b>中華街 → 麵や魁星</b><small>步行約 15–20 分鐘到吉田町；週一午間營業仍以店家當日公告為準。</small></div>
+              <time>13:50</time><div><b>麵や魁星</b><small>主打白松露鹽味拉麵；若排隊太長，最晚 14:50 離店。</small></div>
+              <time>15:15</time><div><b>回橫濱洲際取行李</b><small>從櫻木町側回飯店約 20 分鐘；炎熱或攜帶戰利品時直接搭車。</small></div>
+              <time>15:45</time><div><b>港未來 → 新宿三丁目</b><small>搭港未來線／東橫線／副都心線直通列車，免在橫濱站搬行李轉車。</small></div>
+              <time>16:45</time><div><b>入住新宿格拉斯麗酒店</b><small>傍晚留在歌舞伎町、新宿站周邊自由活動。</small></div>
             </div>
-            <div class="day-footer"><span class="tag alert">出發前查步道狀況</span><span class="tag">健行約 2.5–3 小時</span><span class="tag">微下坡方向</span><span class="tag">雨天改湖畔景點</span></div>
+            <div class="day-footer"><span class="tag alert">中華街只吃少量</span><span class="tag alert">15:15 回飯店</span><span class="tag">海港單向步行</span><span class="tag">住新宿格拉斯麗</span></div>
+            <details class="food-dropdown">
+              <summary><strong>沿線餐廳與備選</strong><small>關內／新宿・2 間</small></summary>
+              <div class="food-options">
+                <div class="food-option">
+                  <div class="food-option-head"><b>麵や魁星</b><span class="food-route">關內主線</span></div>
+                  <p>位於中華街往櫻木町與飯店回程方向，是今天的主餐；推薦白松露鹽味拉麵，現場營業與售完狀況以店家公告為準。</p>
+                  <a href="https://maps.app.goo.gl/fc2dDB1t43dFVy1S7?g_st=il" target="_blank" rel="noopener" aria-label="在 Google Maps 查看麵や魁星">Google Maps ↗</a>
+                </div>
+                <div class="food-option">
+                  <div class="food-option-head"><b>牛舌檸檬 新宿</b><span class="food-route caution">晚餐備選</span></div>
+                  <p>靠近新宿住宿端，適合入住後另作晚餐；熱門時段通常需預約，不要以它取代橫濱午餐後再空腹等位。</p>
+                  <a href="https://www.google.com/maps/search/?api=1&amp;query=Gyu+Tongue+Lemon+Shinjuku" target="_blank" rel="noopener" aria-label="在 Google Maps 查看牛舌檸檬新宿">Google Maps ↗</a>
+                </div>
+              </div>
+            </details>
           </div>
         </article>
 
         <article class="day-card reveal" style="--card-color:#d07b2c">
           <div class="day-date"><strong>28</strong><span>TUE · JUL</span><em>魔法・回程</em></div>
           <div class="day-content">
-            <h3>哈利波特影城 → 麻布十番 → 成田</h3>
-            <p class="direction">大門／濱松町　→　豐島園　→　麻布十番　→　大門取行李　→　NRT T1</p>
+            <h3>新宿 → 哈利波特影城 → 成田</h3>
+            <p class="direction">新宿格拉斯麗　→　豐島園　→　新宿取行李　→　NRT T1</p>
             <div class="schedule">
-              <time>07:45</time><div><b>退房、行李寄放飯店</b><small>住大門／濱松町可把今天三段動線接在大江戶線上。</small></div>
-              <time>08:00</time><div><b>大門 → 豐島園</b><small>搭都營大江戶線直達；08:40 左右抵達並預留安檢。</small></div>
-              <time>09:00</time><div><b>哈利波特影城</b><small>務必預訂第一梯次；參觀、拍照與商店共抓 4–4.5 小時。</small></div>
-              <time>13:30</time><div><b>豐島園 → 麻布十番</b><small>大江戶線直達，不需要回東京市中心轉車。</small></div>
-              <time>14:20</time><div><b>麻布十番商店街</b><small>散步、午餐或甜點；15:30 準時離開。</small></div>
-              <time>15:40</time><div><b>返回大門取行李</b><small>若影城延誤，縮短麻布十番，不延後機場出發。</small></div>
-              <time>16:30</time><div><b>最晚離開大門前往成田</b><small>目標 18:00–18:15 抵達 T1，保留至少 3 小時。</small></div>
+              <time>08:30</time><div><b>退房、行李寄放格拉斯麗</b><small>上午留白吃早餐與整理行李，不再插入麻布十番。</small></div>
+              <time>09:45</time><div><b>新宿西口 → 豐島園</b><small>搭都營大江戶線直達，約 20 分鐘；10:30 左右抵達園區。</small></div>
+              <time>10:30</time><div><b>影城大廳、商店與安檢</b><small>官方允許票面時間前最多 1 小時進入建築，正式展區仍依票面時段。</small></div>
+              <time>11:30</time><div><b>哈利波特影城入場</b><small>已知最早門票時段；參觀、拍照與商店合計抓 4 小時。</small></div>
+              <time>15:30</time><div><b>最晚離開影城</b><small>搭大江戶線回新宿西口，步行回飯店取行李。</small></div>
+              <time>16:20</time><div><b>格拉斯麗取行李</b><small>步行至新宿站；若影城延誤，不增加任何景點或正餐。</small></div>
+              <time>17:00</time><div><b>搭 N’EX 前往成田</b><small>以當日指定席班次為準，目標 18:30–18:45 抵達 T1。</small></div>
               <time>21:15</time><div><b>TR875 起飛</b><small>23:55 抵達桃園 T1。</small></div>
             </div>
-            <div class="day-footer"><span class="tag alert">影城只訂 09:00</span><span class="tag alert">16:30 是硬性離開時間</span><span class="tag">大江戶線直達</span><span class="tag">NRT T1</span></div>
+            <div class="day-footer"><span class="tag alert">影城 11:30</span><span class="tag alert">15:30 硬性離場</span><span class="tag">大江戶線直達</span><span class="tag">NRT T1</span></div>
             <details class="food-dropdown">
-              <summary><strong>沿線備選餐廳</strong><small>大江戶線／麻布十番旁・2 間</small></summary>
+              <summary><strong>收藏餐廳提醒</strong><small>不插入回程日・1 間</small></summary>
               <div class="food-options">
                 <div class="food-option">
-                  <div class="food-option-head"><b>入鹿TOKYO 六本木</b><span class="food-route">麻布十番旁</span></div>
-                  <p>六本木就在麻布十番旁，適合取代商店街內的正餐；若現場排隊，立即回麻布十番，15:30 仍須離開。</p>
+                  <div class="food-option-head"><b>入鹿TOKYO 六本木</b><span class="food-route caution">保留收藏</span></div>
+                  <p>11:30 影城票加上 21:15 成田航班後，六本木不在順路動線；保留連結供未來使用，本次不要插入 7/28。</p>
                   <a href="https://www.google.com/maps/search/?api=1&amp;query=Iruca+Tokyo+Roppongi" target="_blank" rel="noopener" aria-label="在 Google Maps 查看入鹿TOKYO六本木">Google Maps ↗</a>
-                </div>
-                <div class="food-option">
-                  <div class="food-option-head"><b>牛舌檸檬 新宿</b><span class="food-route caution">本次不建議</span></div>
-                  <p>雖然豐島園往麻布十番會經過新宿，但無法與影城、麻布十番及 16:30 機場截止可靠共存；本次只作收藏點。</p>
-                  <a href="https://www.google.com/maps/search/?api=1&amp;query=Gyu+Tongue+Lemon+Shinjuku" target="_blank" rel="noopener" aria-label="在 Google Maps 查看牛舌檸檬新宿">Google Maps ↗</a>
                 </div>
               </div>
             </details>
@@ -775,16 +789,16 @@
     <section class="section">
       <div class="section-heading reveal">
         <div><div class="kicker">Before Departure</div><h2>出發前清單</h2></div>
-        <p class="section-note">真正會影響成行的是中禪寺住宿、東武指定席、影城早場，以及大行李如何跨過日光過夜。</p>
+        <p class="section-note">目前最重要的是行李寄放、7/28 的 N’EX 指定席，以及依當日營業狀況保留替代方案。</p>
       </div>
       <div class="checklist">
         <div class="checklist-card reveal">
           <h3>現在優先處理</h3>
-          <ul><li>購買 7/28 09:00 哈利波特影城門票</li><li>預訂 7/26 中禪寺溫泉與 7/27 大門／濱松町住宿</li><li>預約 7/26 去程與 7/27 回程東武特急指定席</li><li>確認東京飯店可寄放一晚，或可代收宅配大行李</li></ul>
+          <ul><li>確認 7/26 橫濱洲際與 7/27 新宿格拉斯麗訂房</li><li>確認 7/28 哈利波特影城 11:30 電子票</li><li>預約 7/28 新宿至成田的 N’EX 指定席</li><li>向江戶東京博物館確認大型行李寄放位置</li></ul>
         </div>
         <div class="checklist-card reveal">
-          <h3>奧日光健行裝備</h3>
-          <ul><li>防滑步行鞋、輕便雨衣與替換襪</li><li>每人至少一公升水、鹽分補給與簡單行動糧</li><li>防曬、防蚊、帽子及薄外套</li><li>前一晚查看天氣、巴士班次與步道封閉公告</li></ul>
+          <h3>夏日城市步行</h3>
+          <ul><li>橫濱海港日帶遮陽帽、防曬與輕便雨衣</li><li>每人至少一公升水與鹽分補給</li><li>大型行李不帶進八十八與橫濱散步線</li><li>出發前再次查店休、列車與高溫警報</li></ul>
         </div>
       </div>
     </section>
@@ -821,46 +835,50 @@
         ]
       },
       {
-        id: "d3", tab: "7/26", date: "7 月 26 日・週日", title: "東京 → 日光世界遺產", color: "#188f8b",
-        summary: "輕裝從淺草搭東武特急，走完神橋與二社一寺後，上山入住中禪寺湖。",
-        routeLabel: "開啟世界遺產步行線",
-        routeUrl: "https://www.google.com/maps/dir/?api=1&origin=%E7%A5%9E%E6%A9%8B%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82&destination=%E6%97%A5%E5%85%89%E4%BA%8C%E8%8D%92%E5%B1%B1%E7%A5%9E%E7%A4%BE%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82&waypoints=%E8%BC%AA%E7%8E%8B%E5%AF%BA%E4%B8%89%E4%BD%9B%E5%A0%82%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82%7C%E6%97%A5%E5%85%89%E6%9D%B1%E7%85%A7%E5%AE%AE%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82&travelmode=walking",
+        id: "d3", tab: "7/26", date: "7 月 26 日・週日", title: "淺草 → 兩國 → 橫濱", color: "#188f8b",
+        summary: "先在開店時段到八十八良葉舎，再往南參觀江戶東京博物館，下午直接移動至橫濱。",
+        routeLabel: "淺草取行李 → 兩國",
+        routeUrl: "https://www.google.com/maps/dir/?api=1&origin=InterContinental+Tokyo+Bay&destination=%E6%B1%9F%E6%88%B6%E6%9D%B1%E4%BA%AC%E5%8D%9A%E7%89%A9%E9%A4%A8&waypoints=%E6%9D%B1%E6%AD%A6%E6%B7%BA%E8%8D%89%E9%A7%85%7C%E5%85%AB%E5%8D%81%E5%85%AB%E8%89%AF%E8%91%89%E8%88%8D+%E6%B5%85%E8%8D%89%7C%E6%9D%B1%E6%AD%A6%E6%B7%BA%E8%8D%89%E9%A7%85&travelmode=transit",
+        extraRouteLabel: "兩國 → 橫濱飯店",
+        extraRouteUrl: "https://www.google.com/maps/dir/?api=1&origin=%E6%B1%9F%E6%88%B6%E6%9D%B1%E4%BA%AC%E5%8D%9A%E7%89%A9%E9%A4%A8&destination=InterContinental+Yokohama+Grand&travelmode=transit",
         stops: [
-          {name:"東京灣洲際酒店", time:"06:30", coords:[35.6541,139.7627], note:"退房、只帶過夜背包"},
-          {name:"東武淺草站", time:"07:30", coords:[35.7119,139.7983], note:"搭早班東武特急"},
-          {name:"東武日光站", time:"約 09:40", coords:[36.7489,139.6199], note:"依預訂車次調整"},
-          {name:"神橋・輪王寺", time:"約 10:00", coords:[36.7534,139.6042], note:"世界遺產區起點"},
-          {name:"日光東照宮", time:"11:30", coords:[36.7580,139.5988], note:"預留約 2 小時"},
-          {name:"二荒山神社", time:"14:30", coords:[36.7587,139.5961], note:"有體力再加大猷院"},
-          {name:"華嚴瀑布", time:"16:30", coords:[36.7381,139.5025], note:"若來不及則移至隔天"},
-          {name:"中禪寺溫泉", time:"17:30", coords:[36.7384,139.4957], note:"湖畔住宿"}
+          {name:"東京灣洲際酒店", time:"08:30", coords:[35.6541,139.7627], note:"退房、帶全部行李"},
+          {name:"東武淺草站・寄放行李", time:"09:20", coords:[35.7119,139.7983], note:"先放大型行李"},
+          {name:"八十八良葉舎 淺草", time:"09:30", coords:[35.7145375,139.8014641], note:"開店前排隊，10:00 入店"},
+          {name:"東武淺草站・取行李", time:"10:50", coords:[35.7119,139.7983], note:"取件後前往兩國"},
+          {name:"江戶東京博物館", time:"11:15", coords:[35.6965972,139.7957336], note:"寄放行李、11:30–14:30 參觀"},
+          {name:"橫濱洲際大飯店", time:"16:15", coords:[35.4576661,139.6375062], note:"入住、港未來晚餐"}
         ]
       },
       {
-        id: "d4", tab: "7/27", date: "7 月 27 日・週一", title: "戰場之原健行", color: "#8b5069",
-        summary: "由湯瀑順著微下坡自然研究路走到赤沼；龍頭瀑布視體力加排，下午返回東京。",
-        routeLabel: "開啟健行步行線",
-        routeUrl: "https://www.google.com/maps/dir/?api=1&origin=%E6%B9%AF%E6%BB%9D%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82&destination=%E8%B5%A4%E6%B2%BC%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82&waypoints=%E5%B0%8F%E6%BB%9D%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82%7C%E6%B3%89%E9%96%80%E6%B1%A0%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82%7C%E9%9D%92%E6%9C%A8%E6%A9%8B%2C%E6%A0%83%E6%9C%A8%E7%B8%A3%E6%97%A5%E5%85%89%E5%B8%82&travelmode=walking",
+        id: "d4", tab: "7/27", date: "7 月 27 日・週一", title: "橫濱海港 → 中華街 → 關內", color: "#8b5069",
+        summary: "沿海港單向步行到中華街，主餐排在關內的麵や魁星；回飯店取行李後直達新宿。",
+        routeLabel: "海港散步・前半",
+        routeUrl: "https://www.google.com/maps/dir/?api=1&origin=InterContinental+Yokohama+Grand&destination=%E5%B1%B1%E4%B8%8B%E5%85%AC%E5%9C%92&waypoints=%E8%87%A8%E6%B8%AF%E5%85%AC%E5%9C%92%7C%E6%B1%BD%E8%BB%8A%E9%81%93%7C%E6%A9%AB%E6%BF%B1%E7%B4%85%E7%A3%9A%E5%80%89%E5%BA%AB&travelmode=walking",
+        extraRouteLabel: "中華街・拉麵・回飯店",
+        extraRouteUrl: "https://www.google.com/maps/dir/?api=1&origin=%E5%B1%B1%E4%B8%8B%E5%85%AC%E5%9C%92&destination=InterContinental+Yokohama+Grand&waypoints=%E6%A9%AB%E6%BF%B1%E4%B8%AD%E8%8F%AF%E8%A1%97%7C%E9%BA%B5%E3%82%84%E9%AD%81%E6%98%9F&travelmode=walking",
         stops: [
-          {name:"中禪寺溫泉", time:"08:10", coords:[36.7384,139.4957], note:"搭巴士前往湯滝入口"},
-          {name:"湯瀑", time:"08:40", coords:[36.7955,139.4289], note:"健行起點、整體微下坡"},
-          {name:"泉門池", time:"10:00", coords:[36.7866,139.4387], note:"林間與濕地交界"},
-          {name:"戰場之原", time:"10:45", coords:[36.7826,139.4444], note:"木棧道與濕原展望"},
-          {name:"赤沼", time:"12:00", coords:[36.7750,139.4478], note:"主要健行終點"},
-          {name:"龍頭瀑布", time:"12:30", coords:[36.7691,139.4528], note:"視體力加排與午餐"},
-          {name:"中禪寺溫泉・取行李", time:"13:30", coords:[36.7384,139.4957], note:"返回飯店領取過夜背包"},
-          {name:"東武日光站", time:"16:20", coords:[36.7489,139.6199], note:"搭特急返回東京"}
+          {name:"橫濱洲際大飯店", time:"09:30", coords:[35.4576661,139.6375062], note:"退房、寄放行李"},
+          {name:"臨港公園", time:"10:00", coords:[35.4611941,139.6368792], note:"沿海濱往汽車道"},
+          {name:"汽車道", time:"10:15", coords:[35.4528701,139.6345294], note:"海港步行景觀線"},
+          {name:"橫濱紅磚倉庫", time:"10:30", coords:[35.4526,139.6428], note:"1 號館 10:00、2 號館 11:00 開"},
+          {name:"山下公園", time:"11:45", coords:[35.4457,139.6492], note:"沿海濱步道單向前進"},
+          {name:"橫濱中華街", time:"12:20", coords:[35.4426638,139.6451907], note:"散步與少量點心"},
+          {name:"麵や魁星", time:"13:50", coords:[35.4459748,139.6324317], note:"吉田町白松露鹽味拉麵"},
+          {name:"橫濱洲際大飯店・取行李", time:"15:15", coords:[35.4576661,139.6375062], note:"15:45 前往新宿"},
+          {name:"新宿格拉斯麗酒店", time:"16:45", coords:[35.6953583,139.7020345], note:"新宿住宿"}
         ]
       },
       {
-        id: "d5", tab: "7/28", date: "7 月 28 日・週二", title: "影城 → 麻布十番 → 成田", color: "#d07b2c",
-        summary: "大江戶線直連大門、豐島園與麻布十番；16:30 是前往機場的硬性離開時間。",
+        id: "d5", tab: "7/28", date: "7 月 28 日・週二", title: "新宿 → 影城 → 成田", color: "#d07b2c",
+        summary: "11:30 入場、15:30 離場；返回新宿取行李後搭 N’EX，麻布十番不插入回程日。",
+        routeLabel: "開啟影城與機場路線",
+        routeUrl: "https://www.google.com/maps/dir/?api=1&origin=Hotel+Gracery+Shinjuku&destination=Narita+Airport+Terminal+1&waypoints=Warner+Bros.+Studio+Tour+Tokyo+-+The+Making+of+Harry+Potter%7CHotel+Gracery+Shinjuku&travelmode=transit",
         stops: [
-          {name:"大門／濱松町飯店", time:"08:00", coords:[35.6556,139.7547], note:"退房、寄放行李"},
-          {name:"Warner Bros. Studio Tour", time:"09:00", coords:[35.7429,139.6490], note:"第一梯次、13:30 前離場"},
-          {name:"麻布十番商店街", time:"14:20", coords:[35.6552,139.7367], note:"大江戶線直達"},
-          {name:"大門／濱松町飯店", time:"15:40", coords:[35.6556,139.7547], note:"取行李，16:30 最晚出發"},
-          {name:"成田機場 T1", time:"18:00", coords:[35.7647,140.3864], note:"TR875 21:15 起飛"}
+          {name:"新宿格拉斯麗酒店", time:"08:30", coords:[35.6953583,139.7020345], note:"退房、寄放行李"},
+          {name:"Warner Bros. Studio Tour", time:"10:30", coords:[35.7429,139.6490], note:"11:30 入場、15:30 離開"},
+          {name:"新宿格拉斯麗酒店・取行李", time:"16:20", coords:[35.6953583,139.7020345], note:"步行至新宿站"},
+          {name:"成田機場 T1", time:"18:30", coords:[35.7647,140.3864], note:"TR875 21:15 起飛"}
         ]
       }
     ];
@@ -869,6 +887,7 @@
     const summary = document.getElementById("routeSummary");
     const list = document.getElementById("routeList");
     const googleRoute = document.getElementById("googleRoute");
+    const googleRouteExtra = document.getElementById("googleRouteExtra");
     let map, markerLayer, lineLayer;
 
     function mapsUrl(stops) {
@@ -941,6 +960,12 @@
         </li>`).join("");
       googleRoute.textContent = day.routeLabel || "Google Maps 路線";
       googleRoute.href = day.routeUrl || mapsUrl(day.stops);
+      const hasExtraRoute = Boolean(day.extraRouteUrl);
+      googleRouteExtra.hidden = !hasExtraRoute;
+      if (hasExtraRoute) {
+        googleRouteExtra.textContent = day.extraRouteLabel || "第二段 Google Maps";
+        googleRouteExtra.href = day.extraRouteUrl;
+      }
 
       if (map) {
         markerLayer.clearLayers();
